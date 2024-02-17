@@ -38,8 +38,8 @@ class PersonService {
             .orElseThrow { ResourceNotFoundException("No records found for this ID") }
 
         entity.firstName = person.firstName
-        entity.lasttName = person.lasttName
-        entity.addrss = person.addrss
+        entity.lastName = person.lastName
+        entity.address = person.address
         entity.gender = person.gender
 
         return repository.save(entity)
