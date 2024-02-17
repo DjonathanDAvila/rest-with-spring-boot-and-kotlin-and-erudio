@@ -15,7 +15,7 @@ object DozerMapper {
     fun <O, D> parseListObjects(origin: List<O>, destination: Class<D>?): ArrayList<D> {
         val destinationObjects: ArrayList<D> = ArrayList()
         for (o in origin) {
-            destinationObjects.add(mapper.map(origin, destination))
+            destinationObjects.add(mapper.map(o, destination))
         }
         return destinationObjects
     }

@@ -31,21 +31,22 @@ class MockPerson {
 
     fun mockEntity(number: Int): Person {
         val person = Person()
-        person.address = "Address Test$number"
-        person.firstName = "First Name Test$number"
-        person.gender = if (number % 2 == 0) "Male" else "Female"
         person.id = number.toLong()
+        person.firstName = "First Name Test$number"
         person.lastName = "Last Name Test$number"
+        person.address = "Address Test$number"
+        person.gender = if (number % 2 == 0) "Male" else "Female"
         return person
     }
 
     fun mockVO(number: Int): PersonVO {
         val person = PersonVO()
-        person.address = "Address Test$number"
-        person.firstName = "First Name Test$number"
-        person.gender = if (number % 2 == 0) "Male" else "Female"
         person.id = number.toLong()
+        person.firstName = "First Name Test$number"
         person.lastName = "Last Name Test$number"
+        person.address = "Address Test$number"
+        person.gender = if (number % 2 == 0) "Male" else "Female"
+
         return person
     }
 }

@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong
 class PersonController {
 
     val counter: AtomicLong = AtomicLong()
-    /*
+    
     @Autowired // Quem vai fazer a instanciação é o Spring
     private lateinit var service: PersonService
     /*Substitui ->
@@ -50,7 +50,7 @@ class PersonController {
         service.delete(id)
 
         return ResponseEntity.noContent().build<Any>()
-    }*/
+    }
 
 
 }
