@@ -1,11 +1,12 @@
 package br.com.erudio.mapper
 
-import org.modelmapper.ModelMapper
+import com.github.dozermapper.core.DozerBeanMapperBuilder
+import com.github.dozermapper.core.Mapper
 
 object DozerMapper {
 
-    //    private val mapper: Mapper = DozerBeanMapperBuilder.buildDefault()
-    private val mapper: ModelMapper = ModelMapper()
+        private val mapper: Mapper = DozerBeanMapperBuilder.buildDefault()
+//    private val mapper: ModelMapper = ModelMapper()
 
     /*Function que converte um objeto para outro objeto*/
     fun <O, D> parseObject(origin: O, destination: Class<D>?): D {
