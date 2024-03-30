@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class PersonServiceTest {
+internal class PersonServiceTest {
 
     private lateinit var inputObject: MockPerson
 
@@ -29,6 +29,7 @@ class PersonServiceTest {
 
     @Mock
     private lateinit var repository: PersonRepository
+
     @BeforeEach
     fun setUpMock() {
         inputObject = MockPerson()
@@ -56,18 +57,59 @@ class PersonServiceTest {
         assertEquals("First Name Test1", result.firstName)
         assertEquals("Last Name Test1", result.lastName)
         assertEquals("Female", result.gender)
-
     }
 
     @Test
     fun create() {
+        val entity = inputObject.mockEntity(1)
+
+        val persisted = entity.copy()
+        persisted.id = 1
+
+        `when`(repository.save(entity)).thenReturn(persisted)
+
+        val vo = inputObject.mockVO(1)
+        val result = service.create(vo)
+
+        assertNotNull(result)
+        assertNotNull(result.idPerson)
+        assertNotNull(result.links)
+        println(result.links)
+        assertTrue(result.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
+        assertEquals("Address Test1", result.address)
+        assertEquals("First Name Test1", result.firstName)
+        assertEquals("Last Name Test1", result.lastName)
+        assertEquals("Female", result.gender)
     }
 
     @Test
     fun update() {
+        val entity = inputObject.mockEntity(1)
+
+        val persisted = entity.copy()
+        persisted.id = 1
+
+        `when`(repository.findById(1)).thenReturn(Optional.of(entity))
+        `when`(repository.save(entity)).thenReturn(persisted)
+
+        val vo = inputObject.mockVO(1)
+        val result = service.update(vo)
+
+        assertNotNull(result)
+        assertNotNull(result.idPerson)
+        assertNotNull(result.links)
+        println(result.links)
+        assertTrue(result.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
+        assertEquals("Address Test1", result.address)
+        assertEquals("First Name Test1", result.firstName)
+        assertEquals("Last Name Test1", result.lastName)
+        assertEquals("Female", result.gender)
     }
 
     @Test
     fun delete() {
+        val entity = inputObject.mockEntity(1)
+        `when`(repository.findById(1)).thenReturn(Optional.of(entity))
+        service.delete(1)
     }
 }

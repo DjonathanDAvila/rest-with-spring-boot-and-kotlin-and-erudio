@@ -1,6 +1,7 @@
 package br.com.erudio.exception.handler
 
 import br.com.erudio.exception.ExceptionResponse
+import br.com.erudio.exception.RequiredObjectItNullException
 import br.com.erudio.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -25,5 +26,10 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
     fun handleResourceNotFoundException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(Date(), ex.message, request.getDescription(false))
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND)
+    }
+    @ExceptionHandler(RequiredObjectItNullException::class)
+    fun handleBadRequestException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
+        val exceptionResponse = ExceptionResponse(Date(), ex.message, request.getDescription(false))
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
     }
 }
