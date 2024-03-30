@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -38,6 +37,49 @@ internal class PersonServiceTest {
 
     @Test
     fun findAll() {
+        val list = inputObject.mockEntityList()
+        `when`(repository.findAll()).thenReturn(list)
+
+        val persons = service.findAll()
+
+        assertNotNull(persons)
+        assertEquals(14, list.size)
+
+        val personOne = persons[1]
+
+        assertNotNull(personOne)
+        assertNotNull(personOne.idPerson)
+        assertNotNull(personOne.links)
+        println(personOne.links)
+        assertTrue(personOne.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
+        assertEquals("Address Test1", personOne.address)
+        assertEquals("First Name Test1", personOne.firstName)
+        assertEquals("Last Name Test1", personOne.lastName)
+        assertEquals("Female", personOne.gender)
+
+        val personFor = persons[4]
+
+        assertNotNull(personFor)
+        assertNotNull(personFor.idPerson)
+        assertNotNull(personFor.links)
+        println(personFor.links)
+        assertTrue(personFor.links.toString().contains("</api/person/v1/4>;rel=\"self\""))
+        assertEquals("Address Test4", personFor.address)
+        assertEquals("First Name Test4", personFor.firstName)
+        assertEquals("Last Name Test4", personFor.lastName)
+        assertEquals("Male", personFor.gender)
+
+        val personSeven = persons[7]
+
+        assertNotNull(personSeven)
+        assertNotNull(personSeven.idPerson)
+        assertNotNull(personSeven.links)
+        println(personSeven.links)
+        assertTrue(personSeven.links.toString().contains("</api/person/v1/7>;rel=\"self\""))
+        assertEquals("Address Test7", personSeven.address)
+        assertEquals("First Name Test7", personSeven.firstName)
+        assertEquals("Last Name Test7", personSeven.lastName)
+        assertEquals("Female", personSeven.gender)
     }
 
     @Test
