@@ -1,19 +1,19 @@
 package br.com.erudio.mockito.services
 
+import br.com.erudio.exception.RequiredObjectItNullException
 import br.com.erudio.repository.PersonRepository
 import br.com.erudio.services.PersonService
 import br.com.erudio.unittests.mapper.mocks.MockPerson
-import org.hibernate.service.spi.InjectService
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
@@ -83,6 +83,17 @@ internal class PersonServiceTest {
     }
 
     @Test
+    fun createWithNullPerson() {
+        val exception : Exception = assertThrows (
+            RequiredObjectItNullException::class.java
+        ) {service.create(null)}
+
+        val expectedMessage = "It is not allowed to persist a null object!"
+        val actualMessage = exception.message
+        assertTrue(actualMessage!!.contains(expectedMessage))
+    }
+
+    @Test
     fun update() {
         val entity = inputObject.mockEntity(1)
 
@@ -105,7 +116,16 @@ internal class PersonServiceTest {
         assertEquals("Last Name Test1", result.lastName)
         assertEquals("Female", result.gender)
     }
+    @Test
+    fun updateWithNullPerson() {
+        val exception : Exception = assertThrows (
+            RequiredObjectItNullException::class.java
+        ) {service.update(null)}
 
+        val expectedMessage = "It is not allowed to persist a null object!"
+        val actualMessage = exception.message
+        assertTrue(actualMessage!!.contains(expectedMessage))
+    }
     @Test
     fun delete() {
         val entity = inputObject.mockEntity(1)
